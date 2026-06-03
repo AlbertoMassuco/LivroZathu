@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoria - LivroZathu</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <img src="images/LivroZathu.jpg" alt="LivroZathu" width="50" height="20">
+                    LivroZathu
+                </a>
+                <span class="tagline-small">Biblioteca digital gratuita</span>
+            </div>
+
+            <button type="button" class="menu-hamburguer" id="menuToggle" aria-label="Menu">☰</button>
+
+            <nav class="main-nav">
+                <a href="categorias.html">Categorias</a>
+                <a href="contacto.html">Contacto</a>
+                <div class="search-container">
+                    <input type="text" class="search-box" placeholder="🔍 Buscar livro..." 
+                           onkeypress="if(event.key==='Enter'){ window.location.href='busca.html?q='+encodeURIComponent(this.value); }">
+                </div>
+            </nav>
+
+            <div class="menu-mobile" id="mobileMenu">
+                <a href="categorias.html">Categorias</a>
+                <a href="contacto.html">📞 Contacto</a></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="categoria-titulo" id="categoria-titulo">
+            <div class="categoria-icon" id="categoria-emoji">📚</div>
+            <h1 id="categoria-nome">Carregando...</h1>
+            <p id="total-livros-info" class="total-info"></p>
+        </div>
+
+        <div id="livros-container" class="livros-grid">
+            <p class="carregando">⏳ A carregar livros...</p>
+        </div>
+
+        <div id="paginacao-container" class="paginacao"></div>
+    </main>
+
+    <div class="float-buttons">
+        <a href="index.html" class="float-home-btn">🏠</a>
+        <button type="button" id="darkModeBtnFloat" class="theme-toggle">🌙</button>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>© 2026 LivroZathu - Todos os direitos reservados</p>
+            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dados-livros.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/share-modal.js"></script>
+    <script>
+        const LIVROS_POR_PAGINA = 12;
+        const MAX_PAGINAS_VISIVEIS = 5;
+        const emojisCategoria = {
+            'desenvolvimento-pessoal': '', 'negocios': '', 'tecnologia': '',
+            'saude': '', 'literatura': '', 'culinaria': '',
+            'ciencia': '', 'relacionamentos': ''
+        };
+        let todosLivros = [], paginaAtual = 1;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoriaId = urlParams.get('id');
+            if (!categoriaId) { window.location.href = 'categorias.html'; return; }
+            
+            todosLivros = getLivrosPorCategoria(categoriaId) || [];
+            let nomeCategoria = categoriaId.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            document.getElementById('categoria-nome').textContent = nomeCategoria;
+            document.getElementById('categoria-emoji').textContent = emojisCategoria[categoriaId] || '';
+            document.getElementById('total-livros-info').innerHTML = ``;
+            mostrarPagina(1);
+        });
+
+        function mostrarPagina(pagina) {
+            paginaAtual = pagina;
+            const inicio = (pagina - 1) * LIVROS_POR_PAGINA;
+            const livrosPagina = todosLivros.slice(inicio, inicio + LIVROS_POR_PAGINA);
+            renderizarLivros(livrosPagina);
+            renderizarPaginacao();
+        }
+
+        function renderizarLivros(livros) {
+            const container = document.getElementById('livros-container');
+            if (!container) return;
+            if (!livros || !livros.length) { container.innerHTML = '<p class="sem-livros">📭 Nenhum livro disponível.</p>'; return; }
+            container.innerHTML = '';
+            livros.forEach(livro => {
+                const card = document.createElement('div');
+                card.className = 'livro-card';
+                card.innerHTML = `
+                    <img src="${livro.imagem || 'images/capas/livro-generico.jpg'}" alt="${livro.titulo}" onerror="this.src='images/capas/livro-generico.jpg'">
+                    <h3 class="livro-titulo">${livro.titulo}</h3>
+                    <p class="livro-disciplina">${livro.disciplina}</p>
+                    <p class="livro-autor">${livro.autor || 'Autor'}</p>
+                    <p class="livro-descricao-curta">${livro.descricao_curta || ''}</p>
+                    <div class="livro-botoes">
+                        <a href="${livro.visualizar || livro.download}" target="_blank" class="btn btn-visualizar">Visualizar</a>
+                        <a href="${livro.download}" download class="btn btn-download">Baixar</a>
+                        <button onclick="abrirCompartilhamento(${livro.id})" class="btn btn-share">Partilhar</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderizarPaginacao() {
+            const totalPaginas = Math.ceil(todosLivros.length / LIVROS_POR_PAGINA);
+            const pagContainer = document.getElementById('paginacao-container');
+            if (!pagContainer) return;
+            if (totalPaginas <= 1) { pagContainer.innerHTML = ''; return; }
+            let html = '<div class="paginacao-botoes">';
+            if (paginaAtual > 1) html += `<button class="pag-btn" onclick="mostrarPagina(${paginaAtual-1})">← Anterior</button>`;
+            if (totalPaginas <= MAX_PAGINAS_VISIVEIS + 2) {
+                for (let i = 1; i <= totalPaginas; i++) html += `<button class="pag-btn ${i===paginaAtual?'pag-ativa':''}" onclick="mostrarPagina(${i})">${i}</button>`;
+            } else if (paginaAtual <= 3) {
+                for (let i = 1; i <= MAX_PAGINAS_VISIVEIS; i++) html += `<button class="pag-btn ${i===paginaAtual?'pag-ativa':''}" onclick="mostrarPagina(${i})">${i}</button>`;
+                html += `<span class="pag-ellipsis">...</span><button class="pag-btn" onclick="mostrarPagina(${totalPaginas})">${totalPaginas}</button>`;
+            } else if (paginaAtual >= totalPaginas - 2) {
+                html += `<button class="pag-btn" onclick="mostrarPagina(1)">1</button><span class="pag-ellipsis">...</span>`;
+                for (let i = totalPaginas - 4; i <= totalPaginas; i++) if(i>0) html += `<button class="pag-btn ${i===paginaAtual?'pag-ativa':''}" onclick="mostrarPagina(${i})">${i}</button>`;
+            } else {
+                html += `<button class="pag-btn" onclick="mostrarPagina(1)">1</button><span class="pag-ellipsis">...</span>`;
+                for (let i = paginaAtual-2; i <= paginaAtual+2; i++) html += `<button class="pag-btn ${i===paginaAtual?'pag-ativa':''}" onclick="mostrarPagina(${i})">${i}</button>`;
+                html += `<span class="pag-ellipsis">...</span><button class="pag-btn" onclick="mostrarPagina(${totalPaginas})">${totalPaginas}</button>`;
+            }
+            if (paginaAtual < totalPaginas) html += `<button class="pag-btn" onclick="mostrarPagina(${paginaAtual+1})">Próximo →</button>`;
+            pagContainer.innerHTML = html + '</div>';
+        }
+
+        function abrirCompartilhamento(livroId) {
+            if (typeof window.abrirCompartilhamento === 'function') window.abrirCompartilhamento(livroId);
+            else alert('Função de partilha disponível em breve!');
+        }
+
+        // Dark mode e menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const darkBtnFloat = document.getElementById('darkModeBtnFloat');
+            const darkBtnMobile = document.getElementById('darkModeBtnMobile');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', e => { e.stopPropagation(); mobileMenu.classList.toggle('show'); });
+                document.addEventListener('click', event => { if (!menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) mobileMenu.classList.remove('show'); });
+            }
+
+            function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); atualizarBotoesDarkMode(); }
+            if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+            atualizarBotoesDarkMode();
+            if (darkBtnFloat) darkBtnFloat.addEventListener('click', toggleDarkMode);
+            if (darkBtnMobile) darkBtnMobile.addEventListener('click', toggleDarkMode);
+        });
+    </script>
+</body>
+</html>

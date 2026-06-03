@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LivroZathu - Contacte-nos. Envie mensagem, fale pelo WhatsApp ou telefone.">
+    <meta name="author" content="Alberto Massuco">
+    <title>LivroZathu - Contacto</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <img src="images/LivroZathu.jpg" alt="LivroZathu" width="50" height="20">
+                    LivroZathu
+                </a>
+                <span class="tagline-small">Biblioteca digital gratuita</span>
+            </div>
+
+            <button type="button" class="menu-hamburguer" id="menuToggle" aria-label="Menu">☰</button>
+
+            <nav class="main-nav">
+                <a href="categorias.html">Categorias</a>
+                </nav>
+
+            <div class="menu-mobile" id="mobileMenu">
+                <a href="categorias.html">Categorias</a>
+        </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="contact-hero">
+            <h1>📞 CONTACTE-NOS</h1>
+            <p>Estamos aqui para ouvir você</p>
+        </section>
+
+        <section class="contact-info-grid">
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3><a href="mailto:alberto.massuco@outlook.com">Email</a></h3>
+                <p class="contact-note">Respondemos em até 48h</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3><a href="https://wa.me/258875091741" target="_blank">WhatsApp</a></h3>
+                <p class="contact-note">Segunda a Sábado, 11h-20h</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">📞</div>
+                <h3><a href="tel:+258875091741">Telefone</a></h3>
+                <p class="contact-note">Clique para ligar</p>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <h2 class="section-title">📝 Envie sua mensagem</h2>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="nome">Nome completo *</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="+258 87 000 0000">
+                </div>
+                <div class="form-group">
+                    <label for="assunto">Assunto *</label>
+                    <select id="assunto" name="assunto" required>
+                        <option value="">Selecione...</option>
+                        <option value="duvida">Dúvida sobre o site</option>
+                        <option value="sugestao">Sugestão de livro</option>
+                        <option value="voluntario">Quero ser voluntário</option>
+                        <option value="problema">Problema técnico</option>
+                        <option value="outro">Outro assunto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mensagem">Mensagem *</label>
+                    <textarea id="mensagem" name="mensagem" rows="6" required placeholder="Escreva sua mensagem aqui..."></textarea>
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="copiar" name="copiar">
+                    <label for="copiar">Enviar uma cópia para meu email</label>
+                </div>
+                <button type="submit" class="submit-button">📧 Enviar Mensagem</button>
+            </form>
+        </section>
+
+        <section class="faq-section">
+            <h2 class="section-title">❓ Perguntas Frequentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item"><h3>Quanto tempo leva para responder?</h3><p>Respondemos em até 48 horas úteis.</p></div>
+                <div class="faq-item"><h3>Posso sugerir livros?</h3><p>Sim! Use o formulário com a opção "Sugestão de livro".</p></div>
+                <div class="faq-item"><h3>Quero ser voluntário, como faço?</h3><p>Envie mensagem com o assunto "Voluntário".</p></div>
+                <div class="faq-item"><h3>Como denunciar um link quebrado?</h3><p>Informe o título do livro no formulário.</p></div>
+            </div>
+        </section>
+    </main>
+
+    <div class="float-buttons">
+        <a href="index.html" class="float-home-btn" title="Página inicial">🏠</a>
+        <button type="button" id="darkModeBtnFloat" class="theme-toggle">🌙</button>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>© 2026 LivroZathu - Todos os direitos reservados</p>
+            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const darkBtnDesktop = document.getElementById('darkModeBtnDesktop');
+            const darkBtnMobile = document.getElementById('darkModeBtnMobile');
+            const darkBtnFloat = document.getElementById('darkModeBtnFloat');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', e => { e.stopPropagation(); mobileMenu.classList.toggle('show'); });
+                document.addEventListener('click', event => { if (!menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) mobileMenu.classList.remove('show'); });
+            }
+
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') document.body.classList.add('dark-mode');
+            atualizarBotoesDarkMode();
+
+            if (darkBtnDesktop) darkBtnDesktop.addEventListener('click', toggleDarkMode);
+            if (darkBtnMobile) darkBtnMobile.addEventListener('click', toggleDarkMode);
+            if (darkBtnFloat) darkBtnFloat.addEventListener('click', toggleDarkMode);
+
+            document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('✅ Mensagem enviada com sucesso! Entraremos em contacto em breve.');
+                this.reset();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,518 @@
+/* ===== MODO ESCURO - ARQUIVO SEPARADO ===== */
+
+/* Botão dark mode (já está no menu) */
+.dark-mode-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    transition: transform 0.3s;
+    line-height: 1;
+}
+
+.dark-mode-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Variáveis do modo escuro */
+body.dark-mode {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --accent-blue: #2b4b7a;
+    --accent-green: #3d8c40;
+    --card-bg: #333333;
+    --border-color: #404040;
+}
+
+/* Aplicar cores escuras */
+body.dark-mode {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* ===== HEADER E MENU ===== */
+body.dark-mode .main-header {
+    background-color: #0f2a44;
+}
+
+body.dark-mode .menu {
+    background-color: #0f2a44;
+}
+
+body.dark-mode .tagline-small {
+    color: #ffd700;
+}
+
+body.dark-mode .tagline {
+    color: #ffb08c !important;
+}
+
+/* ===== MENU HAMBÚRGUER ===== */
+body.dark-mode .menu-mobile {
+    background: #333;
+}
+
+body.dark-mode .menu-mobile a {
+    color: white;
+}
+
+body.dark-mode .menu-mobile a:hover {
+    background: #404040;
+}
+
+body.dark-mode .menu-mobile hr {
+    border-top-color: #404040;
+}
+
+body.dark-mode .menu-mobile .theme-toggle-mobile {
+    background: #3d8c40;
+}
+
+body.dark-mode .menu-mobile .theme-toggle-mobile:hover {
+    background: #2d6d2f;
+}
+
+/* ===== CARD GERAIS ===== */
+body.dark-mode .categoria-card,
+body.dark-mode .classe-card,
+body.dark-mode .livro-card,
+body.dark-mode .sobre-card,
+body.dark-mode .mvv-card,
+body.dark-mode .contact-card,
+body.dark-mode .faq-item,
+body.dark-mode .doacao-card,
+body.dark-mode .termos-card,
+body.dark-mode .categoria-item {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+body.dark-mode .categoria-card h2,
+body.dark-mode .classe-card h2,
+body.dark-mode .livro-titulo,
+body.dark-mode .sobre-card h2,
+body.dark-mode .mvv-card h3,
+body.dark-mode .contact-card h3,
+body.dark-mode .faq-item h3,
+body.dark-mode .termos-card h2,
+body.dark-mode .categoria-header h2,
+body.dark-mode .categoria-titulo h1,
+body.dark-mode .busca-header h1,
+body.dark-mode .doacao-header h1,
+body.dark-mode .section-title {
+    color: #ffffff;
+}
+
+body.dark-mode .categoria-desc,
+body.dark-mode .livro-autor,
+body.dark-mode .livro-descricao-curta,
+body.dark-mode .contact-note {
+    color: #e0e0e0;
+}
+
+/* ===== HERO ===== */
+body.dark-mode .hero {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+body.dark-mode .hero h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .hero p {
+    color: #90caf9;
+}
+
+body.dark-mode .about-hero,
+body.dark-mode .contact-hero {
+    background: linear-gradient(135deg, #0f2a44 0%, #1e3a5f 100%);
+}
+
+/* ===== PREÇOS E DESTAQUES ===== */
+body.dark-mode .preco,
+body.dark-mode .livro-preco {
+    color: #81c784;
+}
+
+body.dark-mode .preco-destaque {
+    background-color: #2d2d2d;
+    color: #81c784;
+}
+
+body.dark-mode .livros-gratis,
+body.dark-mode .subtitulo,
+body.dark-mode .total-info,
+body.dark-mode .termo-pesquisado {
+    color: #81c784;
+}
+
+body.dark-mode .livro-meta span {
+    color: #6ea706 !important;
+}
+
+/* ===== FORMULÁRIOS ===== */
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea,
+body.dark-mode .search-box-container input {
+    background-color: #404040;
+    border-color: #555;
+    color: white;
+}
+
+body.dark-mode .form-group label {
+    color: #e0e0e0;
+}
+
+/* ===== BOTÕES ===== */
+body.dark-mode .btn {
+    background-color: #3d8c40;
+}
+
+body.dark-mode .btn:hover {
+    background-color: #2d6d2f;
+}
+
+body.dark-mode .btn-cancelar {
+    background-color: #a13030;
+}
+
+body.dark-mode .btn-cancelar:hover {
+    background-color: #7a2424;
+}
+
+body.dark-mode .btn-voltar {
+    background-color: #404040;
+    color: white;
+}
+
+body.dark-mode .btn-voltar:hover {
+    background-color: #555;
+}
+
+body.dark-mode .support-button,
+body.dark-mode .btn-doar {
+    background: #c04d2b;
+}
+
+body.dark-mode .support-button:hover,
+body.dark-mode .btn-doar:hover {
+    background: #a03d22;
+}
+
+/* ===== RODAPÉ ===== */
+body.dark-mode footer {
+    background-color: #0f2a44;
+}
+
+body.dark-mode .copyright {
+    background-color: #0f2a44;
+}
+
+/* ===== DROPDOWN ===== */
+body.dark-mode .dropdown-menu {
+    background-color: #333;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .dropdown-menu a {
+    color: white !important;
+}
+
+body.dark-mode .dropdown-menu a:hover {
+    background-color: #404040;
+}
+
+/* ===== MODAL ===== */
+body.dark-mode .modal-content,
+body.dark-mode .modal-share-content {
+    background-color: #333;
+    color: white;
+}
+
+body.dark-mode .modal-content h3,
+body.dark-mode .modal-share h3 {
+    color: white;
+}
+
+body.dark-mode .modal-content input {
+    background-color: #404040;
+    border-color: #555;
+    color: white;
+}
+
+body.dark-mode .modal-content input:focus {
+    border-color: #2b4b7a;
+}
+
+body.dark-mode .modal-fechar {
+    color: #e0e0e0;
+}
+
+body.dark-mode .modal-fechar:hover {
+    background: #404040;
+}
+
+/* ===== POPUP ===== */
+body.dark-mode .popup-content {
+    background-color: #333;
+    color: white;
+}
+
+body.dark-mode .popup-content button {
+    background-color: #2b4b7a;
+}
+
+body.dark-mode .popup-content button:hover {
+    background-color: #1a3552;
+}
+
+/* ===== PAGINAÇÃO ===== */
+body.dark-mode .pag-btn {
+    background: #333;
+    border-color: #404040;
+    color: #e0e0e0;
+}
+
+body.dark-mode .pag-btn:hover {
+    background: #1e3a5f;
+    border-color: #1e3a5f;
+    color: white;
+}
+
+body.dark-mode .pag-ativa {
+    background: #1e3a5f;
+    color: white;
+    border-color: #1e3a5f;
+}
+
+body.dark-mode .pag-ellipsis {
+    color: #e0e0e0;
+}
+
+/* ===== BOTÕES FLUTUANTES ===== */
+body.dark-mode .float-home-btn,
+body.dark-mode .theme-toggle {
+    background: #0f2a44;
+}
+
+body.dark-mode .float-home-btn:hover,
+body.dark-mode .theme-toggle:hover {
+    background: #1e3a5f;
+}
+
+body.dark-mode .float-back-btn {
+    background: #c04d2b;
+}
+
+body.dark-mode .float-back-btn:hover {
+    background: #a03d22;
+}
+
+/* ===== PÁGINA SOBRE ===== */
+body.dark-mode .datas {
+    background: #2d2d2d;
+}
+
+body.dark-mode .data-destaque {
+    background: #404040;
+    color: #81c784;
+}
+
+body.dark-mode .support-section {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+body.dark-mode .support-item {
+    background: #333;
+}
+
+body.dark-mode .support-item p {
+    color: #e0e0e0;
+}
+
+/* ===== PÁGINA DOAÇÃO ===== */
+body.dark-mode .mensagem-inicial {
+    background: #2d2d2d;
+    border-left-color: #2e7d32;
+}
+
+body.dark-mode .mensagem-inicial p {
+    color: #e0e0e0;
+}
+
+body.dark-mode .destaque-verde {
+    background: #404040;
+    border-left-color: #81c784;
+}
+
+body.dark-mode .destaque-verde p {
+    color: #e0e0e0;
+}
+
+body.dark-mode .destaque-verde strong {
+    color: #81c784;
+}
+
+body.dark-mode .detalhe-banco {
+    background: #2d2d2d;
+}
+
+body.dark-mode .detalhe-banco p {
+    color: #e0e0e0;
+}
+
+body.dark-mode .info-metix {
+    background: #404040;
+}
+
+body.dark-mode .info-metix p {
+    color: #e0e0e0;
+}
+
+body.dark-mode .agradecimento-especial {
+    background: linear-gradient(135deg, #0f2a44 0%, #1e3a5f 100%);
+}
+
+/* ===== PÁGINA BUSCA ===== */
+body.dark-mode .sem-resultados {
+    background: #333;
+}
+
+body.dark-mode .sem-resultados p {
+    color: #e0e0e0;
+}
+
+body.dark-mode .sem-resultados .sugestoes {
+    color: #81c784;
+}
+
+body.dark-mode .resultado-info {
+    color: #e0e0e0;
+}
+
+/* ===== PÁGINA TERMOS ===== */
+body.dark-mode .destaque {
+    background: #2d2d2d;
+    border-left-color: #81c784;
+}
+
+/* ===== CATEGORIAS ===== */
+body.dark-mode .categoria-count {
+    background: #2d2d2d;
+    color: #81c784;
+}
+
+body.dark-mode .livros-preview {
+    background: #404040;
+}
+
+body.dark-mode .livro-preview-item {
+    color: #e0e0e0;
+}
+
+body.dark-mode .categoria-btn {
+    background: #2b4b7a;
+}
+
+body.dark-mode .categoria-btn:hover {
+    background: #1e3a5f;
+}
+
+/* ===== MENSAGENS ===== */
+body.dark-mode .carregando,
+body.dark-mode .sem-livros {
+    color: #e0e0e0;
+}
+
+body.dark-mode .form-message.success {
+    background-color: #1e3a2a;
+    color: #a8e6b5;
+    border-color: #2d6d2f;
+}
+
+body.dark-mode .form-message.error {
+    background-color: #3a1e1e;
+    color: #f8a5a5;
+    border-color: #a13030;
+}
+
+/* ===== HASHTAGS E SHARE ===== */
+body.dark-mode .hashtags {
+    background: #2d2d2d;
+    color: #81c784;
+}
+
+body.dark-mode .livro-preview {
+    background: #404040;
+}
+
+body.dark-mode .livro-preview h4 {
+    color: white;
+}
+
+body.dark-mode .livro-preview p,
+body.dark-mode .link-direto p {
+    color: #e0e0e0;
+}
+
+/* ===== CLASSE CARD SPAN ===== */
+body.dark-mode .classe-card span {
+    background-color: #404040 !important;
+    color: white;
+}
+
+/* ===== DESENVOLVEDOR ===== */
+body.dark-mode .desenvolvedor {
+    background-color: #2d2d2d;
+}
+
+/* Responsividade para dark mode */
+@media (max-width: 768px) {
+    body.dark-mode .dropdown-menu {
+        background-color: rgba(15, 42, 68, 0.95);
+    }
+    
+    body.dark-mode .dropdown-menu a {
+        color: white !important;
+    }
+    
+    body.dark-mode .dropdown-menu a:hover {
+        background-color: rgba(255,255,255,0.1);
+    }
+}
+
+/* Transição suave */
+body, 
+.menu, 
+.main-header,
+.categoria-card, 
+.classe-card, 
+.livro-card, 
+.sobre-card,
+.mvv-card,
+.contact-card,
+.faq-item,
+.doacao-card,
+.termos-card,
+.categoria-item,
+.hero,
+.btn,
+input,
+textarea,
+footer,
+.dropdown-menu,
+.modal-content,
+.modal-share-content,
+.popup-content,
+.pag-btn,
+.float-home-btn,
+.theme-toggle,
+.float-back-btn {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

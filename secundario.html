@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="LivroZathu é uma biblioteca virtual gratuita com Livros digitais em português, inglês e espanhol. Leia online, faça download grátis e explore conhecimento sem limites.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Biblioteca virtual gratuita, livros grátis online, leitura digital, ebooks gratuitos, biblioteca online, LivroZathu, livros em português, inglês e espanhol. Ler livros online, download de livros grátis.">
+    <meta name="author" content="Alberto Massuco">
+
+    <title>Ensino Secundário - LivroZathu</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/ju.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <img src="images/LivroZathu.jpg" alt="LivroZathu" width="50" height="20">
+                    LivroZathu
+                </a>
+                <span class="tagline-small">Biblioteca digital gratuita</span>
+            </div>
+
+            <!-- Botão Hambúrguer (mobile) -->
+            <button type="button" class="menu-hamburguer" id="menuToggle" aria-label="Menu">☰</button>
+
+            <!-- Menu normal (desktop) -->
+            <nav class="main-nav">
+                <a href="indexxx.html">Início</a>
+                <a href="contacto.html">Contacto</a>
+                <a href="primario.html" class="btn-doar">Primário</a>
+               </nav>
+
+            <!-- Menu Mobile (aparece ao clicar) -->
+            <div class="menu-mobile" id="mobileMenu">
+                <a href="indexxx.html">Início</a>
+                <a href="contacto.html">Contacto</a>
+                <hr>
+                <a href="primario.html" class="btn-doar-mobile">Primário</a>
+                </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="pagina-titulo">
+            <h1>Ensino Secundário</h1>
+            <p class="livros-gratis">7ª a 12ª</p>
+        </div>
+
+        <div class="classes-grid">
+            <a href="classe.html?nivel=secundario&classe=7-classe" class="classe-card">
+                <h2>7ª Classe</h2>
+                <p>Ver livros →</p>
+            </a>
+            <a href="classe.html?nivel=secundario&classe=8-classe" class="classe-card">
+                <h2>8ª Classe</h2>
+                <p>Ver livros →</p>
+            </a>
+            <a href="classe.html?nivel=secundario&classe=9-classe" class="classe-card">
+                <h2>9ª Classe</h2>
+                <p>Ver livros →</p>
+            </a>
+            <a href="classe.html?nivel=secundario&classe=10-classe" class="classe-card">
+                <h2>10ª Classe</h2>
+                <p>Ver livros →</p>
+            </a>
+            <a href="classe.html?nivel=secundario&classe=11-classe" class="classe-card">
+                <h2>11ª Classe</h2>
+                <p>Ver livros →</p>
+            </a>
+            <a href="classe.html?nivel=secundario&classe=12-classe" class="classe-card">
+                <h2>12ª Classe</h2>
+                <p>Ver livros →</p>
+            </a>
+        </div>
+    </main>
+
+    <!-- Botões flutuantes -->
+    <div class="float-buttons">
+        <a href="index.html" class="float-home-btn" title="Página inicial">🏠</a>
+        <button type="button" id="darkModeBtnFloat" class="theme-toggle" title="Modo escuro">🌙</button>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>© 2026 LivroZathu - Todos os direitos reservados</p>
+            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/dados-livros.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== MENU HAMBÚRGUER =====
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileMenu.classList.toggle('show');
+                });
+                document.addEventListener('click', function(event) {
+                    if (!menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        mobileMenu.classList.remove('show');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

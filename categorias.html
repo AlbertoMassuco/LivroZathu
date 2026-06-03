@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LivroZathu - Categorias de livros gratuitos">
+    <meta name="author" content="Alberto Massuco">
+    <title>Categorias - LivroZathu</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <img src="images/LivroZathu.jpg" alt="LivroZathu" width="50" height="20">
+                    LivroZathu
+                </a>
+                <span class="tagline-small">Biblioteca digital gratuita</span>
+            </div>
+
+            <button type="button" class="menu-hamburguer" id="menuToggle" aria-label="Menu">☰</button>
+
+            <nav class="main-nav">
+                <a href="categorias.html" class="active">Categorias</a><a href="contacto.html">Contacto</a> <div class="search-container">
+                    <input type="text" class="search-box" placeholder="🔍 Buscar livro..." 
+                           onkeypress="if(event.key==='Enter'){ window.location.href='busca.html?q='+encodeURIComponent(this.value); }">
+                </div>
+            </nav>
+
+            <div class="menu-mobile" id="mobileMenu">
+                <a href="categorias.html">📚 Categorias</a>
+                <a href="contacto.html">📞 Contacto</a>
+                <hr></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="categorias-page">
+            <div class="page-header">
+                <h1>Todas as Categorias</h1>
+                <p></p>
+            </div>
+
+            <div class="categorias-grid">
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">✏️</span>
+                        <h2>Educação Moçambicana</h2>
+                    </div>
+                    <p class="categoria-desc">Materiais didáticos para alunos e professores do primário e secundário em Moçambique.</p>
+                    <a href="indexxx.html" class="categoria-btn">Ver todos os livros →</a>
+                    </div>
+
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">🧠</span>
+                        <h2>Desenvolvimento Pessoal</h2>
+                    </div>
+                    <p class="categoria-desc">Livros para transformar sua mentalidade, criar hábitos positivos e alcançar seu potencial máximo.</p>
+                    <a href="categoria.html?id=desenvolvimento-pessoal" class="categoria-btn">Ver todos os livros →</a>
+                </div>
+
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">💼</span>
+                        <h2>Negócios e Finanças</h2>
+                    </div>
+                    <p class="categoria-desc">Estratégias, liderança, empreendedorismo, investimentos e educação financeira.</p>
+                    <a href="categoria.html?id=negocios" class="categoria-btn">Ver todos os livros →</a>
+                </div>
+
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">💻</span>
+                        <h2>Tecnologia</h2>
+                    </div>
+                    <p class="categoria-desc">Programação, inteligência artificial, inovação e o futuro digital.</p>
+                    <a href="categoria.html?id=tecnologia" class="categoria-btn">Ver todos os livros →</a>
+                </div>
+
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">❤️</span>
+                        <h2>Saúde</h2>
+                    </div>
+                    <p class="categoria-desc">Bem-estar, alimentação, exercícios, saúde mental e qualidade de vida.</p>
+                    <a href="categoria.html?id=saude" class="categoria-btn">Ver todos os livros →</a>
+                </div>
+
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">📖</span>
+                        <h2>Literatura</h2>
+                    </div>
+                    <p class="categoria-desc">Clássicos da literatura moçambicana, africana e mundial.</p>
+                    <a href="categoria.html?id=literatura" class="categoria-btn">Ver todos os livros →</a>
+                </div>
+
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">🍳</span>
+                        <h2>Culinária</h2>
+                    </div>
+                    <p class="categoria-desc">Receitas moçambicanas, doces, salgados, bolos e culinária internacional.</p>
+                    <a href="categoria.html?id=culinaria" class="categoria-btn">Ver todos os livros →</a>
+                </div>
+
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">🔬</span>
+                        <h2>Ciência</h2>
+                    </div>
+                    <p class="categoria-desc">Física, biologia, química, astronomia e descobertas científicas.</p>
+                    <a href="categoria.html?id=ciencia" class="categoria-btn">Ver todos os livros →</a>
+                </div>
+
+                <div class="categoria-item">
+                    <div class="categoria-header">
+                        <span class="categoria-icon">💑</span>
+                        <h2>Relacionamentos</h2>
+                    </div>
+                    <p class="categoria-desc">Casamento, amizade, família, amor e comunicação interpessoal.</p>
+                    <a href="categoria.html?id=relacionamentos" class="categoria-btn">Ver todos os livros →</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="float-buttons">
+        <a href="index.html" class="float-home-btn">🏠</a>
+        <button type="button" id="darkModeBtnFloat" class="theme-toggle">🌙</button>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>© 2026 LivroZathu - Todos os direitos reservados</p>
+            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const darkBtnFloat = document.getElementById('darkModeBtnFloat');
+            const darkBtnMobile = document.getElementById('darkModeBtnMobile');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function(e) { e.stopPropagation(); mobileMenu.classList.toggle('show'); });
+                document.addEventListener('click', function(event) { if (!menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) mobileMenu.classList.remove('show'); });
+            }
+
+            function toggleDarkMode() {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+                atualizarBotoesDarkMode();
+            }
+
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') document.body.classList.add('dark-mode');
+            atualizarBotoesDarkMode();
+
+            if (darkBtnFloat) darkBtnFloat.addEventListener('click', toggleDarkMode);
+            if (darkBtnMobile) darkBtnMobile.addEventListener('click', toggleDarkMode);
+        });
+    </script>
+</body>
+</html>

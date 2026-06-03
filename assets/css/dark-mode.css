@@ -1,0 +1,237 @@
+/* ===== MODO ESCURO - ARQUIVO SEPARADO ===== */
+
+/* Botão dark mode (já está no menu) */
+.dark-mode-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    transition: transform 0.3s;
+    line-height: 1;
+}
+
+.dark-mode-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Variáveis do modo escuro */
+body.dark-mode {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --accent-blue: #2b4b7a;
+    --accent-green: #3d8c40;
+    --card-bg: #333333;
+    --border-color: #404040;
+}
+
+/* Aplicar cores escuras */
+body.dark-mode {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+body.dark-mode .menu {
+    background-color: #0f2a44;
+}
+
+body.dark-mode .categoria-card,
+body.dark-mode .classe-card,
+body.dark-mode .livro-card,
+body.dark-mode .sobre-card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+body.dark-mode .categoria-card h2,
+body.dark-mode .classe-card h2,
+body.dark-mode .livro-titulo,
+body.dark-mode .sobre-card h2 {
+    color: #ffffff;
+}
+
+body.dark-mode .hero {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+body.dark-mode .hero h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .hero p {
+    color: #90caf9;
+}
+
+body.dark-mode .preco,
+body.dark-mode .livro-preco {
+    color: #81c784;
+}
+
+body.dark-mode .preco-destaque {
+    background-color: #2d2d2d;
+    color: #81c784;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+    background-color: #404040;
+    border-color: #555;
+    color: white;
+}
+
+body.dark-mode .form-group label {
+    color: #e0e0e0;
+}
+
+body.dark-mode footer {
+    background-color: #0f2a44;
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: #333;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .dropdown-menu a {
+    color: white !important;
+}
+
+body.dark-mode .dropdown-menu a:hover {
+    background-color: #404040;
+}
+
+body.dark-mode .classe-card span {
+    background-color: #404040 !important;
+    color: white;
+}
+
+body.dark-mode .modal-content {
+    background-color: #333;
+    color: white;
+}
+
+body.dark-mode .modal-content h3 {
+    color: white;
+}
+
+body.dark-mode .modal-content input {
+    background-color: #404040;
+    border-color: #555;
+    color: white;
+}
+
+body.dark-mode .modal-content input:focus {
+    border-color: #2b4b7a;
+}
+
+body.dark-mode .popup-content {
+    background-color: #333;
+    color: white;
+}
+
+body.dark-mode .popup-content button {
+    background-color: #2b4b7a;
+}
+
+body.dark-mode .popup-content button:hover {
+    background-color: #1a3552;
+}
+
+body.dark-mode .btn {
+    background-color: #3d8c40;
+}
+
+body.dark-mode .btn:hover {
+    background-color: #2d6d2f;
+}
+
+body.dark-mode .btn-cancelar {
+    background-color: #a13030;
+}
+
+body.dark-mode .btn-cancelar:hover {
+    background-color: #7a2424;
+}
+
+body.dark-mode .sobre-card {
+    background-color: var(--card-bg);
+}
+
+body.dark-mode .desenvolvedor {
+    background-color: #2d2d2d;
+}
+
+body.dark-mode .form-message.success {
+    background-color: #1e3a2a;
+    color: #a8e6b5;
+    border-color: #2d6d2f;
+}
+
+body.dark-mode .form-message.error {
+    background-color: #3a1e1e;
+    color: #f8a5a5;
+    border-color: #a13030;
+}
+
+body.dark-mode .carregando {
+    color: #e0e0e0;
+}
+
+body.dark-mode .classe-card {
+    background-color: var(--card-bg);
+    color: white;
+}
+
+body.dark-mode .classe-card h2 {
+    color: white;
+}
+
+body.dark-mode .classe-card p {
+    color: #81c784;
+}
+
+body.dark-mode .btn-voltar {
+    background-color: #404040;
+    color: white;
+}
+
+body.dark-mode .btn-voltar:hover {
+    background-color: #555;
+}
+
+/* Responsividade para dark mode */
+@media (max-width: 768px) {
+    body.dark-mode .dropdown-menu {
+        background-color: rgba(15, 42, 68, 0.95);
+    }
+    
+    body.dark-mode .dropdown-menu a {
+        color: white !important;
+    }
+    
+    body.dark-mode .dropdown-menu a:hover {
+        background-color: rgba(255,255,255,0.1);
+    }
+}
+
+/* Transição suave */
+body, 
+.menu, 
+.categoria-card, 
+.classe-card, 
+.livro-card, 
+.sobre-card,
+.hero,
+.btn,
+input,
+textarea,
+footer,
+.dropdown-menu,
+.modal-content,
+.popup-content {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

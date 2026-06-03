@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LivroZathu - Classe</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <img src="images/LivroZathu.jpg" alt="LivroZathu" width="50" height="20">
+                    LivroZathu
+                </a>
+                <span class="tagline-small">Biblioteca digital gratuita</span>
+            </div>
+
+            <!-- Botão Hambúrguer (mobile) -->
+            <button type="button" class="menu-hamburguer" id="menuToggle" aria-label="Menu">☰</button>
+
+            <!-- Menu normal (desktop) -->
+            <nav class="main-nav">
+                <a href="indexxx.html">Início</a>
+                <a href="primario.html" class="btn-doar">Primário</a>
+                <a href="secundario.html" class="btn-doar">Secundário</a>
+                </nav>
+
+            <!-- Menu Mobile (aparece ao clicar) -->
+            <div class="menu-mobile" id="mobileMenu">
+                <a href="index.html">Início</a>
+                <hr>
+                <a href="doar.html" class="btn-doar-mobile">Doar</a>
+               </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="pagina-titulo" id="classe-titulo">
+            <h1>Carregando...</h1>
+            <p class="livros-gratis">Todos os livros são gratuitos</p>
+        </div>
+
+        <!-- Grid de livros -->
+        <div id="livros-container" class="livros-grid">
+            <p class="carregando">⏳ A carregar livros...</p>
+        </div>
+
+        <!-- ===== PAGINAÇÃO ===== -->
+        <div id="paginacao-container" class="paginacao">
+            <!-- Botões 1, 2, 3... vão aparecer aqui -->
+        </div>
+    </main>
+
+    <!-- Botões flutuantes -->
+    <div class="float-buttons">
+        <a href="index.html" class="float-home-btn" title="Página inicial">🏠</a>
+        <button type="button" id="darkModeBtnFloat" class="theme-toggle" title="Modo escuro">🌙</button>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>© 2026 LivroZathu - Todos os direitos reservados</p>
+            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/dados-livros.js"></script>
+
+    <script>
+        // ===== CONFIGURAÇÕES =====
+        const LIVROS_POR_PAGINA = 6;  // 6 livros por página
+        const MAX_PAGINAS_VISIVEIS = 5;
+        
+        let todosLivros = [];
+        let paginaAtual = 1;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== MENU HAMBÚRGUER =====
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileMenu.classList.toggle('show');
+                });
+                document.addEventListener('click', function(event) {
+                    if (!menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        mobileMenu.classList.remove('show');
+                    }
+                });
+            }
+
+            // ===== CARREGAR LIVROS =====
+            const urlParams = new URLSearchParams(window.location.search);
+            const nivel = urlParams.get('nivel');
+            const classe = urlParams.get('classe');
+            
+            if (!nivel || !classe) {
+                window.location.href = 'categorias.html';
+                return;
+            }
+            
+            // Guardar todos os livros
+            todosLivros = getLivrosPorClasse(nivel, classe);
+            
+            // Atualizar título
+            let nomeClasse = classe.replace('-', ' ');
+            document.getElementById('classe-titulo').querySelector('h1').innerHTML = 
+                `${nivel === 'primario' ? '' : ''} <span style="color:#1e3a5f;">${nomeClasse.toUpperCase()}</span>`;
+            
+            // Mostrar primeira página
+            mostrarPagina(1);
+        });
+
+        // ===== MOSTRAR PÁGINA ESPECÍFICA =====
+        function mostrarPagina(pagina) {
+            paginaAtual = pagina;
+            
+            const inicio = (pagina - 1) * LIVROS_POR_PAGINA;
+            const fim = inicio + LIVROS_POR_PAGINA;
+            const livrosPagina = todosLivros.slice(inicio, fim);
+            
+            renderizarLivros(livrosPagina);
+            renderizarPaginacao();
+        }
+
+        // ===== RENDERIZAR LIVROS =====
+        function renderizarLivros(livros) {
+            const container = document.getElementById('livros-container');
+            if (!container) return;
+            
+            if (!livros || livros.length === 0) {
+                container.innerHTML = '<p class="sem-livros">Nenhum livro disponível.</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            livros.forEach(livro => {
+                const card = document.createElement('div');
+                card.className = 'livro-card';
+                card.innerHTML = `
+                    <img src="${livro.imagem || 'images/capas/livro-generico.jpg'}" 
+                         alt="${livro.titulo}"
+                         onerror="this.src='images/capas/livro-generico.jpg'">
+                    <h3 class="livro-titulo">${livro.titulo}</h3>
+                    <p class="livro-disciplina">${livro.disciplina}</p>
+                    <p class="livro-descricao-curta">${livro.descricao_curta || ''}</p>
+                    <div class="livro-botoes">
+                        <a href="${livro.visualizar || livro.download}" target="_blank" class="btn btn-visualizar">Visualizar</a>
+                        <a href="${livro.download}" download class="btn btn-download">Baixar</a>
+                        <button onclick="abrirCompartilhamento(${livro.id})" class="btn btn-share">Partilhar</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // ===== RENDERIZAR PAGINAÇÃO =====
+        function renderizarPaginacao() {
+            const totalPaginas = Math.ceil(todosLivros.length / LIVROS_POR_PAGINA);
+            const pagContainer = document.getElementById('paginacao-container');
+            
+            if (!pagContainer) return;
+            
+            if (totalPaginas <= 1) {
+                pagContainer.innerHTML = '';
+                return;
+            }
+            
+            let html = '<div class="paginacao-botoes">';
+            
+            // Botão Anterior
+            if (paginaAtual > 1) {
+                html += `<button class="pag-btn" onclick="mostrarPagina(${paginaAtual - 1})">← Anterior</button>`;
+            }
+            
+            let inicio, fim;
+            
+            if (totalPaginas <= MAX_PAGINAS_VISIVEIS + 2) {
+                inicio = 1;
+                fim = totalPaginas;
+                for (let i = inicio; i <= fim; i++) {
+                    html += `<button class="pag-btn ${i === paginaAtual ? 'pag-ativa' : ''}" onclick="mostrarPagina(${i})">${i}</button>`;
+                }
+            } else {
+                if (paginaAtual <= 3) {
+                    for (let i = 1; i <= MAX_PAGINAS_VISIVEIS; i++) {
+                        html += `<button class="pag-btn ${i === paginaAtual ? 'pag-ativa' : ''}" onclick="mostrarPagina(${i})">${i}</button>`;
+                    }
+                    html += `<span class="pag-ellipsis">...</span>`;
+                    html += `<button class="pag-btn" onclick="mostrarPagina(${totalPaginas})">${totalPaginas}</button>`;
+                } 
+                else if (paginaAtual >= totalPaginas - 2) {
+                    html += `<button class="pag-btn" onclick="mostrarPagina(1)">1</button>`;
+                    html += `<span class="pag-ellipsis">...</span>`;
+                    for (let i = totalPaginas - 4; i <= totalPaginas; i++) {
+                        if (i > 0) {
+                            html += `<button class="pag-btn ${i === paginaAtual ? 'pag-ativa' : ''}" onclick="mostrarPagina(${i})">${i}</button>`;
+                        }
+                    }
+                } 
+                else {
+                    html += `<button class="pag-btn" onclick="mostrarPagina(1)">1</button>`;
+                    html += `<span class="pag-ellipsis">...</span>`;
+                    html += `<button class="pag-btn" onclick="mostrarPagina(${paginaAtual-1})">${paginaAtual-1}</button>`;
+                    html += `<button class="pag-btn pag-ativa" onclick="mostrarPagina(${paginaAtual})">${paginaAtual}</button>`;
+                    html += `<button class="pag-btn" onclick="mostrarPagina(${paginaAtual+1})">${paginaAtual+1}</button>`;
+                    html += `<span class="pag-ellipsis">...</span>`;
+                    html += `<button class="pag-btn" onclick="mostrarPagina(${totalPaginas})">${totalPaginas}</button>`;
+                }
+            }
+            
+            // Botão Próximo
+            if (paginaAtual < totalPaginas) {
+                html += `<button class="pag-btn" onclick="mostrarPagina(${paginaAtual + 1})">Próximo →</button>`;
+            }
+            
+            html += '</div>';
+            pagContainer.innerHTML = html;
+        }
+
+        // Função de partilha
+        function abrirCompartilhamento(livroId) {
+            if (typeof window.abrirCompartilhamento === 'function') {
+                window.abrirCompartilhamento(livroId);
+            } else {
+                alert('Função de partilhar disponível em breve!');
+            }
+        }
+    </script>
+</body>
+</html>

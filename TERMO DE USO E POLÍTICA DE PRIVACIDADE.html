@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LivroZathu - Termos de Uso e Política de Privacidade">
+    <meta name="author" content="Alberto Massuco">
+    <title>LivroZathu - Termos de Uso</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <img src="images/LivroZathu.jpg" alt="LivroZathu" width="50" height="20">
+                    LivroZathu
+                </a>
+                <span class="tagline-small">Biblioteca digital gratuita</span>
+            </div>
+
+            <button type="button" class="menu-hamburguer" id="menuToggle" aria-label="Menu">☰</button>
+
+            <nav class="main-nav">
+               </nav>
+
+            <div class="menu-mobile" id="mobileMenu">
+                <hr>
+               </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="pagina-titulo">
+            <h1>Termos de Uso</h1>
+            <p class="subtitulo">Política de Privacidade e Condições de Uso do LivroZathu</p>
+        </div>
+
+        <div class="termos-container">
+            <div class="termos-card">
+                <h2>1. Aceitação dos Termos</h2>
+                <p>Ao acessar ou usar o site <strong>LivroZathu</strong>, você concorda com estes termos.</p>
+                <p>O LivroZathu é uma biblioteca digital gratuita criada para democratizar o conhecimento.</p>
+            </div>
+
+            <div class="termos-card">
+                <h2>2. Uso Permitido</h2>
+                <p>Você pode:</p>
+                <ul>
+                    <li>Fazer download para uso pessoal</li>
+                    <li>Compartilhar com amigos e familiares</li>
+                    <li>Recomendar o site nas redes sociais</li>
+                </ul>
+            </div>
+
+            <div class="termos-card">
+                <h2>3. Privacidade - O que guardamos?</h2>
+                <p><strong>Quase nada!</strong> O LivroZathu respeita sua privacidade:</p>
+                <ul>
+                    <li>Não pedimos cadastro para ler livros</li>
+                    <li>Não coletamos dados pessoais</li>
+                    <li>Não armazenamos informações de pagamento</li>
+                    <li>Apenas dados anônimos de acesso para melhorar o site</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <div class="float-buttons">
+        <a href="index.html" class="float-home-btn">🏠</a>
+        <button type="button" id="darkModeBtnFloat" class="theme-toggle">🌙</button>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>© 2026 LivroZathu - Todos os direitos reservados</p>
+            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const darkBtnDesktop = document.getElementById('darkModeBtnDesktop');
+            const darkBtnMobile = document.getElementById('darkModeBtnMobile');
+            const darkBtnFloat = document.getElementById('darkModeBtnFloat');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', e => { e.stopPropagation(); mobileMenu.classList.toggle('show'); });
+                document.addEventListener('click', event => { if (!menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) mobileMenu.classList.remove('show'); });
+            }
+
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') document.body.classList.add('dark-mode');
+            atualizarBotoesDarkMode();
+
+            if (darkBtnDesktop) darkBtnDesktop.addEventListener('click', toggleDarkMode);
+            if (darkBtnMobile) darkBtnMobile.addEventListener('click', toggleDarkMode);
+            if (darkBtnFloat) darkBtnFloat.addEventListener('click', toggleDarkMode);
+        });
+    </script>
+</body>
+</html>

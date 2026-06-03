@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Livros - LivroZathu</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <img src="images/LivroZathu.jpg" alt="LivroZathu" width="50" height="20">
+                    LivroZathu
+                </a>
+                <span class="tagline-small">Biblioteca digital gratuita</span>
+            </div>
+
+            <button type="button" class="menu-hamburguer" id="menuToggle" aria-label="Menu">☰</button>
+
+            <nav class="main-nav">
+                <a href="categorias.html">Categorias</a></nav>
+
+            <div class="menu-mobile" id="mobileMenu">
+                <a href="categorias.html">Categorias</a></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="busca-header">
+            <h1>🔍 Buscar Livros</h1>
+            <p class="termo-pesquisado" id="termo-busca"></p>
+        </div>
+
+        <div class="search-box-container">
+            <input type="text" id="nova-busca" placeholder="Digite título, autor ou disciplina..." value="">
+            <button type="button" onclick="realizarNovaBusca()">Buscar</button>
+        </div>
+
+        <div id="resultado-info" class="resultado-info"></div>
+        <div id="livros-container" class="livros-grid"><p class="carregando">⏳ A pesquisar livros...</p></div>
+        <div id="paginacao-container" class="paginacao"></div>
+    </main>
+
+    <div class="float-buttons">
+        <a href="index.html" class="float-home-btn">🏠</a>
+        <button type="button" id="darkModeBtnFloat" class="theme-toggle">🌙</button>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>© 2026 LivroZathu - Todos os direitos reservados</p>
+            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dados-livros.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script>
+        const LIVROS_POR_PAGINA = 9;
+        let todosLivrosEncontrados = [], paginaAtual = 1;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const termoBusca = urlParams.get('q') || '';
+            if (termoBusca) {
+                document.getElementById('termo-busca').innerHTML = `Resultados para: <span style="color:#2e7d32;">"${termoBusca}"</span>`;
+                document.getElementById('nova-busca').value = termoBusca;
+                realizarBusca(termoBusca);
+            } else {
+                document.getElementById('termo-busca').innerHTML = 'Digite algo para buscar';
+                document.getElementById('livros-container').innerHTML = `<div class="sem-resultados"><p>🔍 Digite um termo no campo acima para buscar livros</p><p class="sugestoes">Exemplos: matemática, português, física, programação</p></div>`;
+            }
+
+            // ===== MENU HAMBÚRGUER =====
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', e => { 
+                    e.stopPropagation(); 
+                    mobileMenu.classList.toggle('show'); 
+                });
+                document.addEventListener('click', event => { 
+                    if (!menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) 
+                        mobileMenu.classList.remove('show'); 
+                });
+            }
+        });
+
+        function realizarBusca(termo) {
+            const termoLower = termo.toLowerCase();
+            const resultados = [];
+            for (let classe in LIVROS.primario) LIVROS.primario[classe].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
+            for (let classe in LIVROS.secundario) LIVROS.secundario[classe].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
+            for (let cat in LIVROS.categorias) LIVROS.categorias[cat].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
+            todosLivrosEncontrados = resultados.filter((l, i, self) => i === self.findIndex(x => x.id === l.id));
+            const infoDiv = document.getElementById('resultado-info');
+            if (todosLivrosEncontrados.length === 0) {
+                infoDiv.innerHTML = `Nenhum livro encontrado para "${termo}"`;
+                document.getElementById('livros-container').innerHTML = `<div class="sem-resultados"><p>📭 Nenhum livro encontrado com o termo "${termo}"</p><p class="sugestoes">Sugestões: tente palavras como "matemática", "português", "física", "programação"</p></div>`;
+                document.getElementById('paginacao-container').innerHTML = '';
+            } else {
+                infoDiv.innerHTML = `📚 Encontrados ${todosLivrosEncontrados.length} livros`;
+                mostrarPagina(1);
+            }
+        }
+
+        function mostrarPagina(pagina) {
+            paginaAtual = pagina;
+            const inicio = (pagina-1)*LIVROS_POR_PAGINA;
+            const livrosPagina = todosLivrosEncontrados.slice(inicio, inicio+LIVROS_POR_PAGINA);
+            renderizarLivrosBusca(livrosPagina);
+            renderizarPaginacaoBusca();
+        }
+
+        function renderizarLivrosBusca(livros) {
+            const container = document.getElementById('livros-container');
+            if (!container) return;
+            container.innerHTML = '';
+            livros.forEach(livro => {
+                const card = document.createElement('div');
+                card.className = 'livro-card';
+                card.innerHTML = `
+                    <img src="${livro.imagem || 'images/capas/livro-generico.jpg'}" alt="${livro.titulo}" onerror="this.src='images/capas/livro-generico.jpg'">
+                    <h3 class="livro-titulo">${livro.titulo}</h3>
+                    <p class="livro-disciplina">${livro.disciplina}</p>
+                    <p class="livro-autor">${livro.autor || 'Autor'}</p>
+                    <p class="livro-descricao-curta">${livro.descricao_curta || ''}</p>
+                    <p class="livro-preco">📖 Grátis</p>
+                    <div class="livro-botoes">
+                        <a href="${livro.visualizar || livro.download}" target="_blank" class="btn btn-visualizar">👁️ Visualizar</a>
+                        <a href="${livro.download}" download class="btn btn-download">📥 Baixar</a>
+                        <button onclick="abrirCompartilhamento(${livro.id})" class="btn btn-share">📢 Partilhar</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderizarPaginacaoBusca() {
+            const totalPaginas = Math.ceil(todosLivrosEncontrados.length / LIVROS_POR_PAGINA);
+            const pagContainer = document.getElementById('paginacao-container');
+            if (!pagContainer) return;
+            if (totalPaginas <= 1) { pagContainer.innerHTML = ''; return; }
+            let html = '<div class="paginacao-botoes">';
+            if (paginaAtual > 1) html += `<button class="pag-btn" onclick="mostrarPagina(${paginaAtual-1})">← Anterior</button>`;
+            for (let i = 1; i <= totalPaginas; i++) {
+                if (i === 1 || i === totalPaginas || (i >= paginaAtual-2 && i <= paginaAtual+2)) {
+                    html += `<button class="pag-btn ${i===paginaAtual?'pag-ativa':''}" onclick="mostrarPagina(${i})">${i}</button>`;
+                } else if (i === paginaAtual-3 || i === paginaAtual+3) html += `<span class="pag-ellipsis">...</span>`;
+            }
+            if (paginaAtual < totalPaginas) html += `<button class="pag-btn" onclick="mostrarPagina(${paginaAtual+1})">Próximo →</button>`;
+            pagContainer.innerHTML = html + '</div>';
+        }
+
+        function realizarNovaBusca() {
+            const termo = document.getElementById('nova-busca').value.trim();
+            if (termo === '') { alert('Digite algo para buscar!'); return; }
+            window.location.href = `busca.html?q=${encodeURIComponent(termo)}`;
+        }
+
+        function abrirCompartilhamento(livroId) {
+            if (typeof window.abrirCompartilhamento === 'function') window.abrirCompartilhamento(livroId);
+            else alert('Função de partilha disponível em breve!');
+        }
+
+        document.getElementById('nova-busca')?.addEventListener('keypress', e => { if (e.key === 'Enter') realizarNovaBusca(); });
+    </script>
+</body>
+</html>
