@@ -226,14 +226,56 @@
             pagContainer.innerHTML = html;
         }
 
-        // Função de partilha
-        function abrirCompartilhamento(livroId) {
-            if (typeof window.abrirCompartilhamento === 'function') {
-                window.abrirCompartilhamento(livroId);
-            } else {
-                alert('Função de partilhar disponível em breve!');
-            }
-        }
+       // ===== FUNÇÃO DE PARTILHA COMPLETA =====
+function abrirCompartilhamento(livroId) {
+    // Procurar o livro pelo ID
+    const livro = todosLivros.find(l => l.id === livroId);
+    
+    if (!livro) {
+        alert('Livro não encontrado!');
+        return;
+    }
+    
+    // Preparar os dados para partilhar
+    const dadosPartilha = {
+        title: livro.titulo,
+        text: `${livro.disciplina}\n${livro.descricao_curta || 'Livro gratuito disponível na LivroZathu'}\n\nTodos os livros são gratuitos!`,
+        url: livro.download || livro.visualizar || window.location.href
+    };
+    
+    // Verificar se o navegador suporta a Web Share API
+    if (navigator.share) {
+        // Dispositivos móveis (Android, iOS) - partilha nativa
+        navigator.share(dadosPartilha)
+            .then(() => console.log('Partilha feita com sucesso!'))
+            .catch((error) => {
+                if (error.name !== 'AbortError') {
+                    console.log('Erro na partilha:', error);
+                    fallbackPartilha(dadosPartilha.url);
+                }
+            });
+    } else {
+        // Computadores ou navegadores sem suporte - copiar link
+        fallbackPartilha(dadosPartilha.url);
+    }
+}
+
+// Função alternativa (fallback) para quando a partilha nativa não funciona
+function fallbackPartilha(url) {
+    // Tentar copiar o link
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                alert('✅ Link copiado! Pode colar onde quiser partilhar.');
+            })
+            .catch(() => {
+                alert('❌ Não foi possível copiar. Partilhe este link:\n' + url);
+            });
+    } else {
+        // Último recurso: mostrar o link
+        alert('📖 Partilhe este link:\n' + url);
+    }
+}
     </script>
 </body>
 </html>

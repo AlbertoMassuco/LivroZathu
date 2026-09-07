@@ -145,9 +145,45 @@
         }
 
         function abrirCompartilhamento(livroId) {
-            if (typeof window.abrirCompartilhamento === 'function') window.abrirCompartilhamento(livroId);
-            else alert('Função de partilha disponível em breve!');
-        }
+    // Procurar o livro pelo ID
+    const livro = todosLivros.find(l => l.id === livroId);
+    
+    if (!livro) {
+        alert('Livro não encontrado!');
+        return;
+    }
+    
+    // Dados para partilhar
+    const dadosPartilha = {
+        title: livro.titulo,
+        text: `${livro.disciplina}\n${livro.descricao_curta || 'Livro gratuito da LivroZathu'}\n\n Todos os livros são gratuitos!`,
+        url: livro.download || livro.visualizar || window.location.href
+    };
+    
+    // Partilha nativa (telemóvel)
+    if (navigator.share) {
+        navigator.share(dadosPartilha)
+            .catch((error) => {
+                if (error.name !== 'AbortError') {
+                    fallbackCopiarLink(dadosPartilha.url);
+                }
+            });
+    } else {
+        // Computador: copiar link
+        fallbackCopiarLink(dadosPartilha.url);
+    }
+}
+
+// Função para copiar link (fallback)
+function fallbackCopiarLink(url) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+            .then(() => alert('✅ Link copiado! Pode colar onde quiser partilhar.'))
+            .catch(() => alert('📖 Partilhe este link:\n' + url));
+    } else {
+        alert('📖 Partilhe este link:\n' + url);
+    }
+}
 
         // Dark mode e menu
         document.addEventListener('DOMContentLoaded', function() {
