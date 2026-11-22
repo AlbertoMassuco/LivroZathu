@@ -79,7 +79,6 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    position: fixed;
 }
 
 .logo-area {
@@ -2548,11 +2547,11 @@ body {
 
 .lang-btn.es {
     background: #4b7c44;
-    color: #ad1519;
+    color: #1d0f0f;
 }
 
 .lang-btn.es:hover {
-    background: #ffcc00;
+    background: #c2c1c0;
     transform: translateY(-15px);
     box-shadow: 0 20px 30px rgba(241,191,0,0.3);
 }
