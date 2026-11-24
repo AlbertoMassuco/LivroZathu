@@ -21,16 +21,14 @@
 
             <!-- Menu normal (desktop) -->
             <nav class="main-nav">
-                <a href="indexxx.html">Início</a>
                 <a href="primario.html" class="btn-doar">Primário</a>
                 <a href="secundario.html" class="btn-doar">Secundário</a>
                 </nav>
 
             <!-- Menu Mobile (aparece ao clicar) -->
             <div class="menu-mobile" id="mobileMenu">
-                <a href="index.html">Início</a>
-                <hr>
-                <a href="doar.html" class="btn-doar-mobile">Doar</a>
+                <a href="primario.html" class="btn-doar">Primário</a>
+                <a href="secundario.html" class="btn-doar">Secundário</a>
                </div>
         </div>
     </header>
@@ -61,7 +59,7 @@
     <footer>
         <div class="copyright">
             <p>© 2026 LivroZathu - Todos os direitos reservados</p>
-            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+            <p>Criado por <strong>Alberto Massuco</strong></p>
         </div>
     </footer>
 
@@ -100,7 +98,7 @@
             const classe = urlParams.get('classe');
             
             if (!nivel || !classe) {
-                window.location.href = 'categorias.html';
+                window.location.href = 'index.html';
                 return;
             }
             
@@ -271,7 +269,7 @@ function fallbackPartilha(url) {
             });
     } else {
         // Último recurso: mostrar o link
-        alert('📖 Partilhe este link:\n' + url);
+        alert('Partilhe este link:\n' + url);
     }
 }
     </script>

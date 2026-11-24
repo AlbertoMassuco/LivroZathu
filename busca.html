@@ -15,14 +15,6 @@
                 </a>
                 <span class="tagline-small">Biblioteca digital gratuita</span>
             </div>
-
-            <button type="button" class="menu-hamburguer" id="menuToggle" aria-label="Menu">☰</button>
-
-            <nav class="main-nav">
-                <a href="categorias.html">Categorias</a></nav>
-
-            <div class="menu-mobile" id="mobileMenu">
-                <a href="categorias.html">Categorias</a></div>
         </div>
     </header>
 
@@ -50,7 +42,7 @@
     <footer>
         <div class="copyright">
             <p>© 2026 LivroZathu - Todos os direitos reservados</p>
-            <p>Criado por <strong>Alberto Massuco</strong> - Moçambique 🇲🇿</p>
+            <p>Criado por <strong>Alberto Massuco</strong></p>
         </div>
     </footer>
 
@@ -94,7 +86,7 @@
             const resultados = [];
             for (let classe in LIVROS.primario) LIVROS.primario[classe].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
             for (let classe in LIVROS.secundario) LIVROS.secundario[classe].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
-            for (let cat in LIVROS.categorias) LIVROS.categorias[cat].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
+            for (let cat in LIVROS.index) LIVROS.index[cat].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
             todosLivrosEncontrados = resultados.filter((l, i, self) => i === self.findIndex(x => x.id === l.id));
             const infoDiv = document.getElementById('resultado-info');
             if (todosLivrosEncontrados.length === 0) {

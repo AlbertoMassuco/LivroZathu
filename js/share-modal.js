@@ -36,7 +36,7 @@ function abrirCompartilhamento(livroId) {
         <div class="modal-share-content">
             <button class="modal-fechar" onclick="this.closest('.modal-share').remove()">✕</button>
             
-            <h3>📢 Partilhar ${livro.titulo}</h3>
+            <h3>Partilhar ${livro.titulo}</h3>
             
             <div class="livro-preview">
                 <img src="${livro.imagem || 'images/capas/livro-generico.jpg'}" 
@@ -50,16 +50,16 @@ function abrirCompartilhamento(livroId) {
             
             <div class="redes-sociais">
                 <button onclick="compartilharWhatsApp(${livro.id})" class="rede-btn whatsapp">
-                    📱 WhatsApp
+                     WhatsApp
                 </button>
                 <button onclick="compartilharFacebook(${livro.id})" class="rede-btn facebook">
-                    📘 Facebook
+                     Facebook
                 </button>
                 <button onclick="compartilharTwitter(${livro.id})" class="rede-btn twitter">
-                    🐦 Twitter
+                     Twitter
                 </button>
                 <button onclick="compartilharEmail(${livro.id})" class="rede-btn email">
-                    📧 Email
+                     Email
                 </button>
                 <button onclick="copiarLinkDireto('${livro.download || livro.visualizar || ''}', ${livro.id})" class="rede-btn copy">
                     🔗 Copiar Link
@@ -75,7 +75,7 @@ function abrirCompartilhamento(livroId) {
             </div>
             
             <div class="hashtags">
-                <p>🏷️ #LivroZathu #Educação #Moçambique 🇲🇿</p>
+                <p>🏷️ #LivroZathu #Educação #Moçambique</p>
             </div>
         </div>
     `;
@@ -247,7 +247,7 @@ function compartilharWhatsApp(livroId) {
     const livro = getLivroPorId(livroId);
     if (!livro) return;
     
-    const texto = `📚 *${livro.titulo}*\n📖 ${livro.disciplina || 'Livro gratuito'}\n\n✨ Todos os livros são gratuitos no LivroZathu!\n\n🔗 ${livro.download || livro.visualizar || window.location.href}`;
+    const texto = ` *${livro.titulo}*\n📖 ${livro.disciplina || 'Livro gratuito'}\n\n✨ Todos os livros são gratuitos no LivroZathu!\n\n🔗 ${livro.download || livro.visualizar || window.location.href}`;
     
     window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
     fecharModalAposPartilha();
@@ -266,7 +266,7 @@ function compartilharTwitter(livroId) {
     const livro = getLivroPorId(livroId);
     if (!livro) return;
     
-    const texto = `📚 ${livro.titulo} - ${livro.descricao_curta || 'Leia grátis!'}`;
+    const texto = `${livro.titulo} - ${livro.descricao_curta || 'Leia grátis!'}`;
     const url = livro.download || livro.visualizar || window.location.href;
     
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}&url=${encodeURIComponent(url)}`, '_blank');
@@ -277,8 +277,8 @@ function compartilharEmail(livroId) {
     const livro = getLivroPorId(livroId);
     if (!livro) return;
     
-    const assunto = `📚 Livro gratuito: ${livro.titulo}`;
-    const corpo = `Olá!\n\nEncontrei este livro gratuito no LivroZathu e achei que podias gostar:\n\n📖 ${livro.titulo}\n📝 ${livro.disciplina}\n${livro.descricao_curta ? `📄 ${livro.descricao_curta}\n` : ''}\n\n📥 Download grátis: ${livro.download || livro.visualizar}\n\n#LivroZathu #EducaçãoGrátis\n\n---\n📚 LivroZathu - Biblioteca digital gratuita de Moçambique 🇲🇿`;
+    const assunto = `Livro gratuito: ${livro.titulo}`;
+    const corpo = `Olá!\n\nEncontrei este livro gratuito no LivroZathu e achei que podias gostar:\n\n📖 ${livro.titulo}\n📝 ${livro.disciplina}\n${livro.descricao_curta ? `📄 ${livro.descricao_curta}\n` : ''}\n\n Download grátis: ${livro.download || livro.visualizar}\n\n#LivroZathu #EducaçãoGrátis\n\n---\n📚 LivroZathu - Biblioteca digital gratuita de Moçambique 🇲🇿`;
     
     window.location.href = `mailto:?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
     fecharModalAposPartilha();
