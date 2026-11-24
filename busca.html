@@ -35,7 +35,7 @@
     </main>
 
     <div class="float-buttons">
-        <a href="index.html" class="float-home-btn">🏠</a>
+        <a href="javascript:history.back()" class="float-btn" title="Voltar">⬅️</a>
         <button type="button" id="darkModeBtnFloat" class="theme-toggle">🌙</button>
     </div>
 
@@ -56,6 +56,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const termoBusca = urlParams.get('q') || '';
+            
             if (termoBusca) {
                 document.getElementById('termo-busca').innerHTML = `Resultados para: <span style="color:#2e7d32;">"${termoBusca}"</span>`;
                 document.getElementById('nova-busca').value = termoBusca;
@@ -64,37 +65,69 @@
                 document.getElementById('termo-busca').innerHTML = 'Digite algo para buscar';
                 document.getElementById('livros-container').innerHTML = `<div class="sem-resultados"><p>🔍 Digite um termo no campo acima para buscar livros</p><p class="sugestoes">Exemplos: matemática, português, física, programação</p></div>`;
             }
-
-            // ===== MENU HAMBÚRGUER =====
-            const menuToggle = document.getElementById('menuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-
-            if (menuToggle && mobileMenu) {
-                menuToggle.addEventListener('click', e => { 
-                    e.stopPropagation(); 
-                    mobileMenu.classList.toggle('show'); 
-                });
-                document.addEventListener('click', event => { 
-                    if (!menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) 
-                        mobileMenu.classList.remove('show'); 
-                });
-            }
         });
 
         function realizarBusca(termo) {
             const termoLower = termo.toLowerCase();
             const resultados = [];
-            for (let classe in LIVROS.primario) LIVROS.primario[classe].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
-            for (let classe in LIVROS.secundario) LIVROS.secundario[classe].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
-            for (let cat in LIVROS.index) LIVROS.index[cat].forEach(l => { if (l.titulo.toLowerCase().includes(termoLower) || (l.autor && l.autor.toLowerCase().includes(termoLower))) resultados.push(l); });
+
+            // Função que vasculha qualquer objeto, ignorando erros
+            function vasculhar(dadosCategoria) {
+                if (!dadosCategoria || typeof dadosCategoria !== 'object') return;
+                
+                for (let chave in dadosCategoria) {
+                    let item = dadosCategoria[chave];
+                    
+                    // Se for uma lista de livros (Array)
+                    if (Array.isArray(item)) {
+                        item.forEach(livro => {
+                            if (livro && typeof livro === 'object') {
+                                const titulo = (livro.titulo || '').toLowerCase();
+                                const autor = (livro.autor || '').toLowerCase();
+                                const disciplina = (livro.disciplina || '').toLowerCase();
+                                
+                                if (titulo.includes(termoLower) || autor.includes(termoLower) || disciplina.includes(termoLower)) {
+                                    resultados.push(livro);
+                                }
+                            }
+                        });
+                    } 
+                    // Se for um objeto com subpastas (ex: '1-classe' dentro de 'primario')
+                    else if (typeof item === 'object') {
+                        vasculhar(item); // Chama a função de novo para entrar na subpasta
+                    }
+                }
+            }
+
+            // Tenta pesquisar em todas as variáveis possíveis
+            if (typeof LIVROS !== 'undefined') {
+                vasculhar(LIVROS.primario);
+                vasculhar(LIVROS.primaria); // Caso tenha ficado com o nome errado
+                vasculhar(LIVROS.secundario);
+                vasculhar(LIVROS.index);
+                vasculhar(LIVROS.categorias);
+            } else {
+                console.error("ERRO FATAL: A variável LIVROS não foi encontrada. O ficheiro dados-livros.js tem um erro de sintaxe!");
+                document.getElementById('livros-container').innerHTML = `<p style="color:red;">Erro ao carregar os dados dos livros. Verifica a consola (F12).</p>`;
+                return;
+            }
+
+            // Remove duplicados
             todosLivrosEncontrados = resultados.filter((l, i, self) => i === self.findIndex(x => x.id === l.id));
+            
             const infoDiv = document.getElementById('resultado-info');
+            const container = document.getElementById('livros-container');
+
             if (todosLivrosEncontrados.length === 0) {
-                infoDiv.innerHTML = `Nenhum livro encontrado para "${termo}"`;
-                document.getElementById('livros-container').innerHTML = `<div class="sem-resultados"><p>Nenhum livro encontrado com o termo "${termo}"</p><p class="sugestoes">Sugestões: tente palavras como "matemática", "português", "física", "programação"</p></div>`;
+                infoDiv.innerHTML = `<span style="color: #c27a5e;">Nenhum livro encontrado para "${termo}"</span>`;
+                container.innerHTML = `
+                    <div class="sem-resultados" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <p style="font-size: 1.2rem; margin-bottom: 10px;">😕 Nenhum livro encontrado com o termo "<strong>${termo}</strong>"</p>
+                        <p class="sugestoes" style="color: #666;">Tente pesquisar por: "matemática", "português", "física", "autoestima", etc.</p>
+                    </div>`;
                 document.getElementById('paginacao-container').innerHTML = '';
             } else {
-                infoDiv.innerHTML = `Encontrados ${todosLivrosEncontrados.length} livros`;
+                infoDiv.innerHTML = `Encontrados <strong>${todosLivrosEncontrados.length}</strong> livros`;
                 mostrarPagina(1);
             }
         }
@@ -120,7 +153,6 @@
                     <p class="livro-disciplina">${livro.disciplina}</p>
                     <p class="livro-autor">${livro.autor || 'Autor'}</p>
                     <p class="livro-descricao-curta">${livro.descricao_curta || ''}</p>
-                    <p class="livro-preco"></p>
                     <div class="livro-botoes">
                         <a href="${livro.visualizar || livro.download}" target="_blank" class="btn btn-visualizar">Visualizar</a>
                         <a href="${livro.download}" download class="btn btn-download">Baixar</a>
@@ -159,6 +191,6 @@
         }
 
         document.getElementById('nova-busca')?.addEventListener('keypress', e => { if (e.key === 'Enter') realizarNovaBusca(); });
-    </script>
+</script>
 </body>
 </html>

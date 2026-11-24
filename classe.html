@@ -29,6 +29,8 @@
             <div class="menu-mobile" id="mobileMenu">
                 <a href="primario.html" class="btn-doar">Primário</a>
                 <a href="secundario.html" class="btn-doar">Secundário</a>
+                <input type="text" class="search-box" placeholder="🔍 Buscar livro..." 
+                           onkeypress="if(event.key==='Enter'){ window.location.href='busca.html?q='+encodeURIComponent(this.value); }">
                </div>
         </div>
     </header>
@@ -52,7 +54,7 @@
 
     <!-- Botões flutuantes -->
     <div class="float-buttons">
-        <a href="index.html" class="float-home-btn" title="Página inicial">🏠</a>
+        <a href="javascript:history.back()" class="float-btn" title="Voltar">⬅️</a>
         <button type="button" id="darkModeBtnFloat" class="theme-toggle" title="Modo escuro">🌙</button>
     </div>
 

@@ -1021,6 +1021,37 @@ body {
 }
 
 /* ===== BOTÕES FLUTUANTES ===== */
+
+
+
+.float-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background-color: #2c0303;
+    color: #333;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-size: 20px;
+    transition: transform 0.3s;
+    margin-bottom: 10px; /* Espaço entre os botões */
+}
+
+.float-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Ajuste para o Dark Mode */
+[data-theme="dark"] .float-btn {
+    background-color: #1e293b;
+    color: #fff;
+}
+
+
+
 .float-buttons {
     position: fixed;
     bottom: 30px;
